@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Трекинг</title>
+    <style>
+        #map { height: 100vh; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const trackId = urlParams.get('id');
+    let watchId = null;
+
+    // Отправка координат на "сервер" (в реальном проекте используй WebSocket/Firebase)
+    function sendCoords(lat, lng) {
+        console.log(`Отправка координат для ${trackId}:`, { lat, lng });
+        // Здесь должен быть fetch/WebSocket
+    }
+
+    // Запуск трекинга
+    if (trackId) {
+        watchId = navigator.geolocation.watchPosition(
+            (pos) => {
+                const { latitude, longitude } = pos.coords;
+                sendCoords(latitude, longitude);
+            },
+            (err) => console.error("Ошибка геолокации:", err),
+            { enableHighAccuracy: true }
+        );
+    }
+</script>
+</body>
+</html>
